@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Avaliador de Voos</string>
     <string name="btn_logar">Logar</string>
+    <string name="content_airport">Imagem aeroporto</string>
+    <string name="content_plane">Imagem avião</string>
     <string name="content_user">Imagem usuário</string>
     <string name="content_logo">Logo</string>
     <string name="content_background">Cor de Background pela metade</string>
