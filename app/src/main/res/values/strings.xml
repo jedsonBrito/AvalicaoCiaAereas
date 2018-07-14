@@ -7,10 +7,10 @@
     <string name="content_logo">Logo</string>
     <string name="content_background">Cor de Background pela metade</string>
     <string name="content_password">Imagem Password</string>
-    <string name="hint_name">Full Name</string>
+    <string name="hint_name">Nome</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
-    <string name="btn_sign_up">Sign Up</string>
+    <string name="btn_sign_up">Cadastrar</string>
     <string name="no_account">Não tem conta, cadastre-se</string>
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>

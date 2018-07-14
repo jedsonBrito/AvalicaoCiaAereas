@@ -37,7 +37,7 @@ public class SplashScreen extends AppCompatActivity  implements AnimationListene
     @Override
     public void onAnimationEnd(Animation animation) {
             Intent intent = new Intent(getApplicationContext(),
-                    MainActivity.class);
+                    LoginActivity.class);
             startActivity(intent);
             finish();
     }
