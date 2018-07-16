@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1043121395814",
+    "firebase_url": "https://avalicaociaaereas.firebaseio.com",
+    "project_id": "avalicaociaaereas",
+    "storage_bucket": "avalicaociaaereas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043121395814:android:9efc3c19f091b563",
+        "android_client_info": {
+          "package_name": "com.jedsonbrito.avalicaociaaereas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043121395814-dqjgtfae8tp4mcj64m6t3ani5t9k53hr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jedsonbrito.avalicaociaaereas",
+            "certificate_hash": "679af63ed6efe83c2fab1016a8e52aac877f03f5"
+          }
+        },
+        {
+          "client_id": "1043121395814-qlrmm4bt6k1pjhmd6rpgdi41rg092gvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJOTrKe16lyEmtJZassGEoSqgTu4rGYwg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043121395814-qlrmm4bt6k1pjhmd6rpgdi41rg092gvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
