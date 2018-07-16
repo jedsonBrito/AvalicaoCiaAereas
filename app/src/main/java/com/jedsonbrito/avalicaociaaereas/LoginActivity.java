@@ -28,9 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.editTextEmail);
         password = findViewById(R.id.editTextPassword);
 
-        email.setSelected(false);
-        password.setSelected(false);
-
     }
 
     public void abrirCadastroUsuario(View view){
