@@ -1,8 +1,6 @@
 package com.jedsonbrito.avalicaociaaereas;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.jedsonbrito.appHelper.AppHelper;
 import com.jedsonbrito.config.ConfiguracaoFirebase;
 import com.jedsonbrito.model.Usuario;
 
@@ -46,7 +45,7 @@ public class CadastroUsuario extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(isConnected()){
+                if(AppHelper.isConnected(getSystemService(Context.CONNECTIVITY_SERVICE))){
                     usuario = new Usuario();
                     usuario.setEmail(edt_email.getText().toString());
                     usuario.setNome(edt_nome.getText().toString());
@@ -72,10 +71,10 @@ public class CadastroUsuario extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(CadastroUsuario.this, "Sucesso ao Cadastrar usuário",Toast.LENGTH_SHORT).show();
 
                     FirebaseUser userFirebase = task.getResult().getUser();
                     usuario.setId( userFirebase.getUid());
+                    enviarEmailUsuario(userFirebase);
                     usuario.salvar();
 
                     auth.signOut();
@@ -104,14 +103,20 @@ public class CadastroUsuario extends AppCompatActivity {
         });
     }
 
-        public boolean isConnected() {
-            boolean connected = false;
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-                return connected = true;
+    private void enviarEmailUsuario(final FirebaseUser userFirebase){
+        final String email = userFirebase.getEmail();
+        userFirebase.sendEmailVerification().addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(CadastroUsuario.this, "E-mail enviado para "+email,Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(CadastroUsuario.this, "Falha ao enviar o E-mail ",Toast.LENGTH_SHORT).show();
+                }
             }
-                return connected;
-        }
+        });
+
+    }
 
 }

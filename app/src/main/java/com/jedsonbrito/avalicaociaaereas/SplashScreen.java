@@ -20,9 +20,6 @@ public class SplashScreen extends AppCompatActivity  implements AnimationListene
 
         plane = findViewById(R.id.planeList);
 
-        //AnimationDrawable turbulencia = (AnimationDrawable) plane.getDrawable();
-        //turbulencia.start();
-
         animMove = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.logo_animation);
         plane.setAnimation(animMove);
         animMove.setAnimationListener(this);
