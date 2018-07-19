@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Avaliador de Voos</string>
-    <string name="btn_logar">Logar</string>
+    <string name="btn_logar">Login</string>
     <string name="content_airport">Imagem aeroporto</string>
     <string name="content_plane">Imagem avião</string>
     <string name="content_user">Imagem usuário</string>
@@ -9,8 +9,12 @@
     <string name="content_password">Imagem Password</string>
     <string name="hint_name">Nome</string>
     <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
+    <string name="hint_password">Senha</string>
     <string name="btn_sign_up">Cadastrar</string>
+    <string name="male">Masculino</string>
+    <string name="female">Feminino</string>
+    <string name="born">Data de Nascimento</string>
+    <string name="btn_confir_senha">Confirmar Senha</string>
     <string name="no_account">Não tem conta, cadastre-se</string>
     <string name="err_msg_email">Enter valid email address</string>
     <string name="err_msg_password">Enter the password</string>

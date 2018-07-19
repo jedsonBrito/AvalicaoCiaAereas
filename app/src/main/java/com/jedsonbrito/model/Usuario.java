@@ -10,6 +10,8 @@ public class Usuario {
     private String senha;
     private String email;
     private String nome;
+    private String sexo;
+    private String dataNascimento;
 
     public void salvar(){
         DatabaseReference databaseReference = ConfiguracaoFirebase.getFirebase();
@@ -17,6 +19,22 @@ public class Usuario {
     }
 
     public Usuario() {
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     @Exclude

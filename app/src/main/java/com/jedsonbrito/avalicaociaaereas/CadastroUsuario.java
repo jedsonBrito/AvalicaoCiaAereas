@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,12 +21,18 @@ import com.google.firebase.auth.FirebaseUser;
 import com.jedsonbrito.appHelper.AppHelper;
 import com.jedsonbrito.config.ConfiguracaoFirebase;
 import com.jedsonbrito.model.Usuario;
+import com.vicmikhailau.maskededittext.MaskedFormatter;
+import com.vicmikhailau.maskededittext.MaskedWatcher;
 
 public class CadastroUsuario extends AppCompatActivity {
 
     private EditText edt_nome;
     private EditText edt_email;
     private EditText edt_senha;
+    private RadioButton rdb_masc;
+    private RadioButton rdb_fem;
+    private EditText edt_conf_senha;
+    private EditText edt_data_nascimento;
     private Button btn_cadastrar;
     private Usuario usuario;
 
@@ -37,19 +44,37 @@ public class CadastroUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
 
         edt_nome = findViewById(R.id.edit_cadastro_nome);
+        edt_conf_senha = findViewById(R.id.confir_senha);
+        edt_data_nascimento = findViewById(R.id.edit_data_nascimento);
         edt_email = findViewById(R.id.edit_cadastro_email);
         edt_senha = findViewById(R.id.edit_cadastro_senha);
         btn_cadastrar = findViewById(R.id.btn_cadastrar);
+        rdb_masc = findViewById(R.id.rdb_masc);
+        rdb_fem = findViewById(R.id.rdb_fem);
+        edt_conf_senha = findViewById(R.id.confir_senha);
+
+        MaskedFormatter formatter = new MaskedFormatter("##/##/####");
+        edt_data_nascimento.addTextChangedListener(new MaskedWatcher(formatter, edt_data_nascimento));
 
         btn_cadastrar.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if(AppHelper.isConnected(getSystemService(Context.CONNECTIVITY_SERVICE))){
+                if(AppHelper.isConnected(getSystemService(Context.CONNECTIVITY_SERVICE)) && isvalidaInformacao()){
                     usuario = new Usuario();
                     usuario.setEmail(edt_email.getText().toString());
                     usuario.setNome(edt_nome.getText().toString());
                     usuario.setSenha(edt_senha.getText().toString());
+                    usuario.setDataNascimento(edt_data_nascimento.getText().toString());
+
+                    if(rdb_fem.isChecked()){
+                        usuario.setSexo("Feminino");
+                    }
+
+                    if(rdb_masc.isChecked()){
+                        usuario.setSexo("Masculino");
+                    }
+
                     cadastrarUsuario();
 
                 } else {
@@ -117,6 +142,17 @@ public class CadastroUsuario extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean isvalidaInformacao(){
+        boolean info = false;
+        //Valida Senha
+        if(edt_senha.getText().toString().equals(edt_conf_senha.getText().toString())){
+            info = true;
+        } else {
+            Toast.makeText(CadastroUsuario.this, "Senha e confirmação de senha devem ser iguais",Toast.LENGTH_SHORT).show();
+        }
+        return info;
     }
 
 }
