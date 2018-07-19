@@ -24,6 +24,11 @@ import com.jedsonbrito.model.Usuario;
 import com.vicmikhailau.maskededittext.MaskedFormatter;
 import com.vicmikhailau.maskededittext.MaskedWatcher;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CadastroUsuario extends AppCompatActivity {
 
     private EditText edt_nome;
@@ -60,22 +65,25 @@ public class CadastroUsuario extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if(AppHelper.isConnected(getSystemService(Context.CONNECTIVITY_SERVICE)) && isvalidaInformacao()){
-                    usuario = new Usuario();
-                    usuario.setEmail(edt_email.getText().toString());
-                    usuario.setNome(edt_nome.getText().toString());
-                    usuario.setSenha(edt_senha.getText().toString());
-                    usuario.setDataNascimento(edt_data_nascimento.getText().toString());
+                if(AppHelper.isConnected(getSystemService(Context.CONNECTIVITY_SERVICE))){
+                    if(isvalidaInformacao()) {
+                        usuario = new Usuario();
+                        usuario.setEmail(edt_email.getText().toString());
+                        usuario.setNome(edt_nome.getText().toString());
+                        usuario.setSenha(edt_senha.getText().toString());
+                        usuario.setDataNascimento(edt_data_nascimento.getText().toString());
 
-                    if(rdb_fem.isChecked()){
-                        usuario.setSexo("Feminino");
+                        if (rdb_fem.isChecked()) {
+                            usuario.setSexo("Feminino");
+                        }
+
+                        if (rdb_masc.isChecked()) {
+                            usuario.setSexo("Masculino");
+                        }
+
+                        cadastrarUsuario();
+
                     }
-
-                    if(rdb_masc.isChecked()){
-                        usuario.setSexo("Masculino");
-                    }
-
-                    cadastrarUsuario();
 
                 } else {
                     Toast.makeText(CadastroUsuario.this, "Você deve se conectar a internet antes de efetuar o cadastro ",Toast.LENGTH_LONG).show();
@@ -146,13 +154,87 @@ public class CadastroUsuario extends AppCompatActivity {
 
     private boolean isvalidaInformacao(){
         boolean info = false;
-        //Valida Senha
-        if(edt_senha.getText().toString().equals(edt_conf_senha.getText().toString())){
-            info = true;
+
+        if(isEmpty(edt_senha)){
+            Toast.makeText(CadastroUsuario.this, "Senha deve ser preenchido",Toast.LENGTH_SHORT).show();
+            return info;
+        }
+
+        if(isEmpty(edt_conf_senha)){
+            Toast.makeText(CadastroUsuario.this, "Confirmação de senha deve ser preenchido",Toast.LENGTH_SHORT).show();
+            return info;
+        }
+
+        if(isEmpty(edt_nome)){
+            Toast.makeText(CadastroUsuario.this, "Nome deve ser preenchido",Toast.LENGTH_SHORT).show();
+            return info;
+        }
+
+        if(isEmpty(edt_email)){
+            Toast.makeText(CadastroUsuario.this, "E-mail deve ser preenchido",Toast.LENGTH_SHORT).show();
+            return info;
+        }
+
+        if(isEmpty(edt_data_nascimento)){
+            Toast.makeText(CadastroUsuario.this, "Data de Nascimento deve ser preenchido",Toast.LENGTH_SHORT).show();
+            return info;
+        }
+
+        if(!isvalidaSenha()){
+            return info;
+        }
+
+        if(!isDataValida()){
+            return info;
+        }
+
+
+        return true;
+    }
+
+    private boolean isvalidaSenha(){
+        boolean senhaValida = false;
+        if(edt_senha.getText().toString().equals(edt_conf_senha.getText().toString()) && edt_senha.getText().length() > 0){
+            senhaValida = true;
         } else {
             Toast.makeText(CadastroUsuario.this, "Senha e confirmação de senha devem ser iguais",Toast.LENGTH_SHORT).show();
         }
-        return info;
+        return senhaValida;
+    }
+
+
+    private boolean isDataValida(){
+        DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
+        df.setLenient (false); // aqui o pulo do gato
+        try {
+            df.parse (edt_data_nascimento.getText().toString());
+            if(!comparaDatas()){
+                Toast.makeText(CadastroUsuario.this, "Data Inserida maior que a data Atual",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+            return true;
+        } catch (ParseException ex) {
+            Toast.makeText(CadastroUsuario.this, "Data Invalida, insira uma data válida",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    public  boolean comparaDatas() throws ParseException{
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("dd/MM/yyyy");
+        Date atual = new Date();
+        Date date2 = dateFormat.parse(edt_data_nascimento.getText().toString());
+        if(atual.after(date2)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isEmpty(EditText etText) {
+        String text = etText.getText().toString().trim();
+        if (text.length()<1)
+            return true;
+        return false;
     }
 
 }
